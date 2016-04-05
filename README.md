@@ -13,7 +13,7 @@ One minute | A minute ago
 Between 1 - 60 minutes | 7 minutes ago
 One hour | An hour ago
 Between 1 - 24 hours | 13 hours ago
-One day | One day ago
+One day | A day ago
 Between 1 - 30 days | 4 days ago
 More than a month, but in the current year | 23 Feb
 More than a month, but in another year | 9 Dec 2015

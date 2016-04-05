@@ -71,7 +71,7 @@
         // so we return elapsed time in days.
         var days = Math.round(elapsed / SECS_IN_A_DAY);
         if (days === 1) {
-          return 'One day ago';
+          return 'A day ago';
         } else {
           return  days + ' days ago';
         }
