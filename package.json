@@ -1,12 +1,12 @@
 {
-  "name": "time-ago",
+  "name": "readable-timestamp",
   "description": "Generates a human readable timestamp.",
   "author": "Eneko <contact@eneko.me>",
   "version": "0.1.0",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eneko89/time-ago"
+    "url": "https://github.com/eneko89/readable-timestamp"
   },
   "keywords": [
     "time",

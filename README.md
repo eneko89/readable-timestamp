@@ -1,5 +1,5 @@
-time-ago
-========
+readable-timestamp
+==================
 
 Generates a human readable timestamp that tells how many time has elapsed since
 a given date until now. If more than 30 days have elapsed, generates a short date
@@ -27,14 +27,14 @@ Works both required as CommonsJS module in node or in the browser.
 
 ```javascript
 
-var ago = require('time-ago');
+var ago = require('readable-timestamp');
 
 var now = new Date();
 
 // It will log 'Just now'.
-console.log(ago(now));
+console.log(readableTime(now));
 
 ```
 
 As a CommonsJS module it exports a function, and in a browser environment
-declares ago() function in the global scope.
+declares 'readableTime()' function in the global scope.

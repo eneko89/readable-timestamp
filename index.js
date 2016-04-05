@@ -21,7 +21,7 @@
    * 
    * @return {String}        A string with the elapsed time.
    */
-  function ago(date) {
+  function readableTime(date) {
 
     // Time constants.
     var SECS_IN_A_MINUTE = 60,
@@ -111,11 +111,11 @@
   if (typeof module !== 'undefined' && module.exports) {
 
     // Export as CommonJS module.
-    module.exports = ago;
+    module.exports = readableTime;
   } else {
 
-    // Export it as 'ago' global variable.
-    this.ago = ago;
+    // Export it as 'readableTime' global variable.
+    this.readableTime = readableTime;
   }
 
 }).call(this);
