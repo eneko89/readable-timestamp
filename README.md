@@ -24,10 +24,12 @@ Usage
 
 Works both required as CommonsJS module in node or in the browser.
 
+As a CommonsJS module it exports a function, and in a browser environment
+declares 'readableTime()' function in the global scope.
 
 ```javascript
 
-var ago = require('readable-timestamp');
+var readableTime = require('readable-timestamp');
 
 var now = new Date();
 
@@ -36,5 +38,20 @@ console.log(readableTime(now));
 
 ```
 
-As a CommonsJS module it exports a function, and in a browser environment
-declares 'readableTime()' function in the global scope.
+You can also generate absolute timestamps providing an options.format as the
+second parameter. Accepts 'absolute', 'absolute-full' and 'absolute-short'.
+
+```javascript
+
+var readableTime = require('readable-timestamp');
+
+// At time of writing this, it was 15 April 2016.
+var now = new Date();
+
+// It will log '15 Apr', but if 'now' contained a date from 15 April 2015,
+// it would log '15 Apr 2015', because it's form the past year. Using the
+// 'absolute-full' format will always add the year and with 'absolute-short'
+// it won't never do it.
+console.log(readableTime(now, { format: 'absolute' }));
+
+```

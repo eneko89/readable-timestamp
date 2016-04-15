@@ -17,11 +17,46 @@
    * elapsed, generates a short date string. Some output examples:
    * '2 minutes ago', 'An hour ago', '3 days ago', '23 Feb'...
    * 
-   * @param  {Date}    date  Date object.
+   * @param  {Date}    date           Date object.
+   *
+   * @param  {Object}  [opts]         Optional settings.
    * 
-   * @return {String}        A string with the elapsed time.
+   * @param  {String}  [opts.format]  By default, readableTime()
+   *                                  generates relative time-
+   *                                  stamps for the first month.
+   *                                  Providing 'absolute' here
+   *                                  will always produce absolute
+   *                                  timestamps without the year
+   *                                  for current year and with
+   *                                  the year for past years.
+   *                                  Provide 'absolute-full' to
+   *                                  always generate dates with
+   *                                  year and 'absolute-short'
+   *                                  to generate them without it.
+   * 
+   * @return {String}                 Human readable timestamp.
    */
-  function readableTime(date) {
+  function readableTime(date, opts) {
+
+    // Date and time now.
+    var currentDate = new Date();
+
+    // If an absolute, different from the default format has
+    // been specified in 'opts.format', generate it and return.
+    if (opts && opts.format) {
+      if (opts.format === 'absolute') {
+        return absoluteDate(date, currentDate.getFullYear()
+                                    !== date.getFullYear());
+      } else {
+        if (opts.format === 'absolute-full') {
+          return absoluteDate(date, true);
+        } else {
+          if (opts.format === 'absolute-short') {
+            return absoluteDate(date, false);
+          }
+        }
+      }
+    }
 
     // Time constants.
     var SECS_IN_A_MINUTE = 60,
@@ -29,13 +64,13 @@
         SECS_IN_A_DAY = SECS_IN_AN_HOUR * 24,
         SECS_IN_A_MONTH = SECS_IN_A_DAY * 30;
 
-    // Date and time now.
-    var currentDate = new Date();
-    
     // Time elapsed since 'date' in seconds.
     var elapsed = (currentDate.getTime() / 1000)
                   - (date.getTime() / 1000);
 
+    // Generate the default readable timestamp format (if we
+    // arrived here, no alternative valid 'opts.format' has
+    // been provided).
     if (elapsed < SECS_IN_A_DAY) {
 
       // Only a few seconds have elapsed; that's virtually now.
@@ -77,33 +112,38 @@
         }
       } else {
 
-        // More than 30 days have elapsed, so we erite a short
-        // date representation (day + abbreviated month).
-        var shortDate = date.getDate() + ' '
-                        + getShortMonth(date.getMonth());
-
-        // If date is not from the current year, include it in
-        // the date also (day + abbreviated month + year).
-        if (currentDate.getFullYear() !== date.getFullYear()) {
-          shortDate += ' ' + date.getFullYear();
-        }
-        return shortDate;
+        // More than 30 days have elapsed, so we return a readable
+        // absolute date representation: day + abbreviated month +
+        // year, (last one only if date isn't in the current year).
+        return absoluteDate(date, currentDate.getFullYear()
+                                    !== date.getFullYear());
       }
     }
 
     /**
-     * Returns the abbreviated name of the month corresponding to
-     * the month index passed as parameter (0-January, 1-February,
-     * and so forth).
+     * Generates a readable absolute timestamp with day, abbreviated
+     * month and optionally the year (e.g. '23 Feb' or '5 May 2015').
      * 
-     * @param  {Number}  month  Zero-based month index.
+     * @param  {Date}     date         Date object.
      * 
-     * @return {String}         Abbreviated name of the month.
+     * @param  {Boolean}  includeYear  Wether to include the year
+     *                                 in the timestamp or not.
+     * 
+     * @return {String}                Generated readable timestamp.
      */
-    function getShortMonth(month) {
+    function absoluteDate(date, includeYear) {
+
+      // Zero indexed abbreviated month names.
       var months = ['Jan','Feb','Mar','Apr','May','Jun',
                     'Jul','Aug','Sep','Oct','Nov', 'Dec'];
-      return months[month];
+
+      // Short date without the year (e.g. '23 Feb').
+      var result = date.getDate() + ' ' + months[date.getMonth()];
+
+      if (includeYear) {
+        result += ' ' + date.getFullYear();
+      }
+      return result;
     }
   }
 
